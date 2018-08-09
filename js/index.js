@@ -38,6 +38,38 @@ window.onload = function(){
 
 
 };
+
+
+//Funcion Editar
+function editar(id){
+    var estudiante;
+    for(var i=0; i<localStorage.length;i++){
+        var clave = localStorage.key(i);
+        if(clave==id){
+            estudiante = $.parseJSON(localStorage.getItem(clave));
+
+            $("#codigo").val(estudiante.id);
+            $("#nombre").val(estudiante.nombre);
+            $("#nota").val(estudiante.nota);
+        }
+    }
+}
+
+
+
+//CAMBIAR TODO A JQUERY PARA QUE SEA MAS FACIL TOMAR LOS DATOS DEL DOM
+
+
+
+
+
+
+
+
+
+
+
+
 //Funcion para incrementar en codigo
 function actualizar_cod(){
 
