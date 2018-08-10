@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Final - El DOM y el BOM</title>
+		<script src="js/jquery.js" language="javascript" type="text/javascript"></script>
 		<script src="js/index.js" language="javascript" type="text/javascript"></script>
 		<link rel=stylesheet type="text/css" href="css/estilos.css">
 		<link rel="stylesheet" type="text/css" href="css/materialize.min.css">
@@ -35,7 +36,8 @@
 						
 						<button class="btn waves-effect waves-light" type="submit" name="action" id="b_promedio">Mostrar Promedio</button>
 						<button class="btn waves-effect waves-light" type="submit" name="action" id="b_mayor">Mostrar Nota Mayor</button>
-						<button class="btn waves-effect waves-light" type="submit" name="action" id="b_menor">Mostrar Nota Menor</button>		              
+						<button class="btn waves-effect waves-light" type="submit" name="action" id="b_menor">Mostrar Nota Menor</button>
+						<button class="btn waves-effect waves-light" type="submit" name="action" id="b_restablecer">Restablecer</button>			              
 						
 			        </div>
 			      </div>
@@ -58,6 +60,8 @@
 						   					<th>Codigo</th>
 						   					<th>Nombre</th>
 						   					<th>Nota</th>
+						   					<th>Editar</th>
+						   					<th>Eliminar</th>
 						   				</tr>
 						   			</thead>
 						   			<tbody id="contenido-tabla">
