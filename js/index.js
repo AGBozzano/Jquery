@@ -1,13 +1,7 @@
 //Funcion para inicialiar Funciones y contador
 $(document).ready(function(){
-    var contador;
-    if(localStorage.length>0){
-        contador = localStorage.length+1;
-    }else{
-        contador= 1;
-    }
 
-    $("#codigo").val(contador);
+    actualizar();
 
     $("#b_registrar").click(function(){
         var e_cod = $("#codigo").val();
@@ -25,6 +19,7 @@ $(document).ready(function(){
 
         mostrar();
         restablecer();
+        actualizar();
     });
 
     $("#b_restablecer").click(function(){
@@ -35,6 +30,27 @@ $(document).ready(function(){
         $("#codigo").val(contador);
         $("#nombre").val("");
         $("#nota").val("");
+    }
+    //Funcion para actualizar correctamente el contador luego de agregar
+    function actualizar(){
+
+        var cont = 1;
+        for(var i=0;i<localStorage.length;i++){
+            
+            var clave = localStorage.key(i);
+            var contenido = $.parseJSON(localStorage.getItem(clave));
+
+            console.log(parseInt(cont)+"..."+parseInt(contenido.codigo))
+            if(parseInt(cont)===parseInt(contenido.codigo)){
+
+                cont++;
+                console.log("SUME 1");
+            }else{
+
+                 $("#codigo").val(cont);
+                 break;
+            }
+        }
     }
 
     mostrar();
@@ -53,7 +69,7 @@ $(document).ready(function(){
             var clave = localStorage.key(i);
             var contenido = $.parseJSON(localStorage.getItem(clave));
             
-            resultado+= contenido.nota;
+            resultado+= parseInt(contenido.nota);
         }
 
        alert("El promedio de las notas de los estudiantes registrados es:" + (resultado/cont).toFixed(2) );
@@ -65,15 +81,19 @@ $(document).ready(function(){
 
         var claveInicio = localStorage.key(0);
         var nota_m = $.parseJSON(localStorage.getItem(claveInicio));
+        
 
         for(var i=0;i<localStorage.length;i++){
 
             var clave = localStorage.key(i);
+            
             var contenido = $.parseJSON(localStorage.getItem(clave));
 
-            if(nota_m.nota <= contenido.nota){
-                nota_m = contenido;
+            
+            if(parseInt(nota_m.nota) < parseInt(contenido.nota)){
+                nota_m = contenido
             } 
+
         }
         alert("El estudiante con mayor nota es: "+ nota_m.nombre + " con " + nota_m.nota);
     });
@@ -83,13 +103,13 @@ $(document).ready(function(){
 
         var claveInicio = localStorage.key(0);
         var nota_men = $.parseJSON(localStorage.getItem(claveInicio));
-
+        
         for(var i=0;i<localStorage.length;i++){
 
             var clave = localStorage.key(i);
             var contenido = $.parseJSON(localStorage.getItem(clave));
 
-            if(nota_men.nota >= contenido.nota){
+            if(parseInt(nota_men.nota) >= parseInt(contenido.nota)){
                 nota_men = contenido;
             } 
         } 
@@ -101,7 +121,7 @@ $(document).ready(function(){
 //Funcion Editar
 function editar(id){
     var estudiante;
-    for(var i=0; i<localStorage.length;i++){
+    for(var i=0; i<localStorage.length+1;i++){
         var clave = localStorage.key(i);
         if(clave==id){
             estudiante = $.parseJSON(localStorage.getItem(clave));
@@ -140,4 +160,5 @@ function eliminar(id){
     localStorage.removeItem(id);
     mostrar();
 }
+
 
