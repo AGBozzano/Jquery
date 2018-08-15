@@ -2,7 +2,11 @@
 $(document).ready(function(){
 
     actualizar();
+    mostrar();
 
+    //BOTONES
+
+    //Boton para registrar estudiante
     $("#b_registrar").click(function(){
         var e_cod = $("#codigo").val();
         var e_nom = $("#nombre").val();
@@ -15,47 +19,16 @@ $(document).ready(function(){
         };
 
         localStorage.setItem(e_cod,JSON.stringify(estudiante));
-        contador = localStorage.length+1;
-
+        
         mostrar();
         restablecer();
-        actualizar();
+        
     });
 
+    //Boton para restablecer los inputs
     $("#b_restablecer").click(function(){
         restablecer();
     });
-
-    function restablecer(){
-        $("#codigo").val(contador);
-        $("#nombre").val("");
-        $("#nota").val("");
-    }
-    //Funcion para actualizar correctamente el contador luego de agregar
-    function actualizar(){
-
-        var cont = 1;
-        for(var i=0;i<localStorage.length;i++){
-            
-            var clave = localStorage.key(i);
-            var contenido = $.parseJSON(localStorage.getItem(clave));
-
-            console.log(parseInt(cont)+"..."+parseInt(contenido.codigo))
-            if(parseInt(cont)===parseInt(contenido.codigo)){
-
-                cont++;
-                console.log("SUME 1");
-            }else{
-
-                 $("#codigo").val(cont);
-                 break;
-            }
-        }
-    }
-
-    mostrar();
-
-    //BOTONES
 
     //Funcion para Mostrar el promedio
     $("#b_promedio").click(function(){
@@ -64,7 +37,7 @@ $(document).ready(function(){
         var resultado = 0;
         var cont =  localStorage.length;
 
-        for(var i=0;i<localStorage.length;i++){
+        for(var i=0;i<localStorage.length+1;i++){
 
             var clave = localStorage.key(i);
             var contenido = $.parseJSON(localStorage.getItem(clave));
@@ -76,7 +49,6 @@ $(document).ready(function(){
     });
 
     //Funcion para Mostrar la nota mayor
-
     $("#b_mayor").click(function(){
 
         var claveInicio = localStorage.key(0);
@@ -131,6 +103,38 @@ function editar(id){
             $("#nota").val(estudiante.nota);
         }
     }
+}
+
+//Funcion para restabler los input
+function restablecer(){
+        actualizar();
+        $("#nombre").val("");
+        $("#nota").val("");
+    }
+    
+//Funcion para actualizar correctamente el contador luego de agregar
+function actualizar(){
+
+    if(localStorage.length==0){
+        
+        var  contInicial=1;
+        $("#codigo").val(contInicial);
+
+    }else{
+        var cont = 1;
+        for(var i=0;i<localStorage.length;i++){
+            
+            var clave = localStorage.key(i);
+            var contenido = $.parseJSON(localStorage.getItem(clave));
+
+            if(cont==contenido.codigo){
+                cont++;
+            }else{
+                break;
+            }
+        }
+        $("#codigo").val(cont);
+    }    
 }
 
 //Funcion para visualizar la tabla e actualizarla (JQUERY)
